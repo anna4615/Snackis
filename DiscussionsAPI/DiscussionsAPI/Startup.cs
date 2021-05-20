@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PostsAPI.Data;
 
-namespace DiscussionsAPI
+namespace PostsAPI
 {
     public class Startup
     {
@@ -32,6 +34,9 @@ namespace DiscussionsAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DiscussionsAPI", Version = "v1" });
             });
+
+            services.AddDbContext<ForumContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ForumContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
