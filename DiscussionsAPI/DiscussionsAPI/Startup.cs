@@ -35,8 +35,11 @@ namespace PostsAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DiscussionsAPI", Version = "v1" });
             });
 
-            services.AddDbContext<ForumContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ForumContext")));
+            services.AddDbContext<SnackisContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SnackisContext")));
+
+            //services.AddDbContext<ForumContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("ForumContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

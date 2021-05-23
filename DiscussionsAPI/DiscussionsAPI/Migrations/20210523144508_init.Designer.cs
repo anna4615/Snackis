@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostsAPI.Data;
 
 namespace PostsAPI.Migrations
 {
-    [DbContext(typeof(ForumContext))]
-    partial class ForumContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SnackisContext))]
+    [Migration("20210523144508_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace PostsAPI.Migrations
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("bit");
 
-                    b.Property<string>("OtherUserName")
+                    b.Property<string>("OnlyForUserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PostId")
@@ -52,7 +54,40 @@ namespace PostsAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SubjectId");
+
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("PostsAPI.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subject");
+                });
+
+            modelBuilder.Entity("PostsAPI.Models.Post", b =>
+                {
+                    b.HasOne("PostsAPI.Models.Subject", "Subject")
+                        .WithMany("Posts")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("PostsAPI.Models.Subject", b =>
+                {
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

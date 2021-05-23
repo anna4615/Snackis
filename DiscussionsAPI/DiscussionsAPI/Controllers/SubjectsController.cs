@@ -12,47 +12,47 @@ namespace PostsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostsController : ControllerBase
+    public class SubjectsController : ControllerBase
     {
         private readonly SnackisContext _context;
 
-        public PostsController(SnackisContext context)
+        public SubjectsController(SnackisContext context)
         {
             _context = context;
         }
 
-        // GET: api/Posts
+        // GET: api/Subjects
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPost()
+        public async Task<ActionResult<IEnumerable<Subject>>> GetSubject()
         {
-            return await _context.Post.ToListAsync();
+            return await _context.Subject.ToListAsync();
         }
 
-        // GET: api/Posts/5
+        // GET: api/Subjects/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Post>> GetPost(int id)
+        public async Task<ActionResult<Subject>> GetSubject(int id)
         {
-            var post = await _context.Post.FindAsync(id);
+            var subject = await _context.Subject.FindAsync(id);
 
-            if (post == null)
+            if (subject == null)
             {
                 return NotFound();
             }
 
-            return post;
+            return subject;
         }
 
-        // PUT: api/Posts/5
+        // PUT: api/Subjects/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(int id, Post post)
+        public async Task<IActionResult> PutSubject(int id, Subject subject)
         {
-            if (id != post.Id)
+            if (id != subject.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(post).State = EntityState.Modified;
+            _context.Entry(subject).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace PostsAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostExists(id))
+                if (!SubjectExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace PostsAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Posts
+        // POST: api/Subjects
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Post>> PostPost(Post post)
+        public async Task<ActionResult<Subject>> PostSubject(Subject subject)
         {
-            _context.Post.Add(post);
+            _context.Subject.Add(subject);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPost", new { id = post.Id }, post);
+            return CreatedAtAction("GetSubject", new { id = subject.Id }, subject);
         }
 
-        // DELETE: api/Posts/5
+        // DELETE: api/Subjects/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePost(int id)
+        public async Task<IActionResult> DeleteSubject(int id)
         {
-            var post = await _context.Post.FindAsync(id);
-            if (post == null)
+            var subject = await _context.Subject.FindAsync(id);
+            if (subject == null)
             {
                 return NotFound();
             }
 
-            _context.Post.Remove(post);
+            _context.Subject.Remove(subject);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PostExists(int id)
+        private bool SubjectExists(int id)
         {
-            return _context.Post.Any(e => e.Id == id);
+            return _context.Subject.Any(e => e.Id == id);
         }
     }
 }
