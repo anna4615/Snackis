@@ -10,10 +10,10 @@ namespace SnackisApp.Areas.Identity.Data
     // Add profile data for application users by adding properties to the SnackisUser class
     public class SnackisUser : IdentityUser
     {
-        [PersonalData]
-        [Required]
-        [Display(Name = "Användarnamn")]
-        public string NickName { get; set; }
+        //[PersonalData]
+        //[Required]
+        //[Display(Name = "Användarnamn")]
+        //public string NickName { get; set; }
 
         [PersonalData]
         [Required]

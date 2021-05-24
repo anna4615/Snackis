@@ -10,8 +10,8 @@ using SnackisApp.Data;
 namespace SnackisApp.Migrations
 {
     [DbContext(typeof(SnackisUsersContext))]
-    [Migration("20210523154934_4")]
-    partial class _4
+    [Migration("20210524154019_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,10 +188,6 @@ namespace SnackisApp.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NickName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)

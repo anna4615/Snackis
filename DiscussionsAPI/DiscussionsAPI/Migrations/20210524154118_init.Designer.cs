@@ -10,7 +10,7 @@ using PostsAPI.Data;
 namespace PostsAPI.Migrations
 {
     [DbContext(typeof(SnackisContext))]
-    [Migration("20210523144508_init")]
+    [Migration("20210524154118_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

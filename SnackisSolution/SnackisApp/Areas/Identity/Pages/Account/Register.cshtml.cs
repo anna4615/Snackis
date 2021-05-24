@@ -47,8 +47,13 @@ namespace SnackisApp.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "AnvändarNamn")]
-            public string NickName { get; set; }
+            [EmailAddress]
+            [Display(Name = "Epost")]
+            public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Användarnamn")]
+            public string UserName { get; set; }
 
             [Required]
             [Display(Name = "Förnamn")]
@@ -56,12 +61,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Efternamn")]
-            public string LastName { get; set; }
-
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Epost")]
-            public string Email { get; set; }
+            public string LastName { get; set; }           
 
             [Required]
             [StringLength(100, ErrorMessage = "{0}et måste bestå av minst {2} och mest {1} tecken.", MinimumLength = 6)]
@@ -90,7 +90,15 @@ namespace SnackisApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new SnackisUser { UserName = Input.Email, Email = Input.Email };
+                var user = new SnackisUser
+                {
+                    UserName = Input.UserName,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Email = Input.Email,
+                    Picture = Input.Picture
+                };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
