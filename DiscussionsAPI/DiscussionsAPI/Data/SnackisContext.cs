@@ -17,5 +17,9 @@ namespace PostsAPI.Data
         public DbSet<PostsAPI.Models.Subject> Subject { get; set; }
 
         public DbSet<PostsAPI.Models.Post> Post { get; set; }
+
+        public DbSet<PostsAPI.Models.Forum> Forum { get; set; }
+
+
     }
 }

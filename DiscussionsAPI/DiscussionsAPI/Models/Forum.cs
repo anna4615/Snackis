@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace PostsAPI.Models
 {
-    public class Subject
+    public class Forum
     {
         public int Id { get; set; }
-        public int ForumId { get; set; }
         public string Name { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<Subject> Subjects { get; set; }
     }
 }

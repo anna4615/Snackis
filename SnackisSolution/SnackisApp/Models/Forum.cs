@@ -7,19 +7,16 @@ using System.Threading.Tasks;
 
 namespace SnackisApp.Models
 {
-    public class Subject
-    {
+    public class Forum
+    {        
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("forumId")]
-        public int ForumId { get; set; }
-
         [JsonPropertyName("name")]
-        [Display(Name = "Namn")]
+        [Display(Name = "Forumnamn")]
         public string Name { get; set; }
-
-        [JsonPropertyName("posts")]
-        public ICollection<Post> Posts { get; set; }
+        
+        [JsonPropertyName("subjects")]
+        public ICollection<Subject> Subjects { get; set; }
     }
 }

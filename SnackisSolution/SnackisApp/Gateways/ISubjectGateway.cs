@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SnackisApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SnackisApp.Models
+namespace SnackisApp.Gateways
 {
     public interface ISubjectGateway
     {

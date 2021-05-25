@@ -1,11 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SnackisApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SnackisApp.Models
+namespace SnackisApp.Gateways
 {
     public class PostGateway : IPostGateway
     {
@@ -19,23 +21,26 @@ namespace SnackisApp.Models
             _client = client;
         }
 
+        public async Task<List<Post>> GetPosts()
+        {
+            var response = await _client.GetAsync(_configuration["PostsAPILocal"]);
+            string apiResponse = await response.Content.ReadAsStringAsync();
 
-        public Task<Post> DeletePost(int deleteId)
+            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
+        }
+
+        public async Task<Post> DeletePost(int deleteId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Post>> GetPosts()
+
+        public async Task<Post> PostPost(Post post)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Post> PostPost(Post post)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Post> PutPost(int editId, Post post)
+        public async Task<Post> PutPost(int editId, Post post)
         {
             throw new NotImplementedException();
         }

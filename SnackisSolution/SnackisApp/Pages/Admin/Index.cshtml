@@ -1,0 +1,82 @@
+﻿@page
+@model SnackisApp.Pages.Admin.IndexModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admin";
+}
+
+@if (Model.Forum == null)
+{
+    <h1 class="text-center">Skapa Forum</h1>
+
+    <div class="col">
+        <div class="row">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="NewForum.Name"></label>
+                    <input asp-for="NewForum.Name" class="form-control" />
+                    <span asp-validation-for="NewForum.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                </div>
+                <input type="submit" value="Spara" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+}
+
+
+else
+{
+
+    <h1 class="text-center">@Model.Forum.Name</h1>
+
+    <h4>Skapa nytt ämne</h4>
+
+    <div class="col">
+        <div class="row">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Subject.Name"></label>
+                    <input asp-for="Subject.Name" class="form-control" />
+                    <span asp-validation-for="Subject.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Spara ämne" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                @if (Model.Subjects.Count > 0)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Subjects[0].Name)
+                    </th>
+                    <th></th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var subject in Model.Subjects)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => subject.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./SubjectEdit" asp-route-SubjectEditId="@subject.Id">Ändra</a> |
+                        <a asp-page="./Delete" asp-route-id="@subject.Id">Radera</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

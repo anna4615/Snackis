@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostsAPI.Data;
 
 namespace PostsAPI.Migrations
 {
     [DbContext(typeof(SnackisContext))]
-    partial class SnackisContextModelSnapshot : ModelSnapshot
+    [Migration("20210525131601_Forumtable")]
+    partial class Forumtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace PostsAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ForumId")
+                    b.Property<int?>("ForumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -107,9 +109,7 @@ namespace PostsAPI.Migrations
                 {
                     b.HasOne("PostsAPI.Models.Forum", null)
                         .WithMany("Subjects")
-                        .HasForeignKey("ForumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ForumId");
                 });
 
             modelBuilder.Entity("PostsAPI.Models.Forum", b =>
