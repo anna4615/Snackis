@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SnackisApp.Gateways;
 using SnackisApp.Models;
 
-namespace SnackisApp.Pages.Admin
+namespace SnackisApp.Pages.Admin.ForumAdmin
 {
-    public class SubjectEditModel : PageModel
+    public class SubjectDeleteModel : PageModel
     {
         private readonly ISubjectGateway _subjectGateway;
 
-        public SubjectEditModel(ISubjectGateway subjectGateway)
+        public SubjectDeleteModel(ISubjectGateway subjectGateway)
         {
             _subjectGateway = subjectGateway;
         }
 
         [BindProperty(SupportsGet = true)]
-        public int SubjectEditId { get; set; }
+        public int SubjectDeleteId { get; set; }
 
+        [BindProperty]
         public Subject Subject { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var subjects = await _subjectGateway.GetSubjects();
-            Subject = subjects.ToList().FirstOrDefault(s => s.Id == SubjectEditId);
+            Subject = await _subjectGateway.GetSubject(SubjectDeleteId);
 
             if (Subject == null)
             {
@@ -35,6 +35,13 @@ namespace SnackisApp.Pages.Admin
             }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _subjectGateway.DeleteSubject(SubjectDeleteId);
+
+            return RedirectToPage("./Index");
         }
     }
 }

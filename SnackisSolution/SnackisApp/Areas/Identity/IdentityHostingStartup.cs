@@ -20,7 +20,8 @@ namespace SnackisApp.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("SnackisUsersContextConnection")));
 
-                services.AddDefaultIdentity<SnackisUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<SnackisUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<SnackisUsersContext>();
             });
         }

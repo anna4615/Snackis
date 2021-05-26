@@ -36,6 +36,9 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Bild")]
+            public string Picture { get; set; }
         }
 
         private async Task LoadAsync(SnackisUser user)
@@ -47,7 +50,8 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Picture = user.Picture
             };
         }
 
@@ -87,6 +91,13 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (Input.Picture != user.Picture)
+            {
+                user.Picture = Input.Picture;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

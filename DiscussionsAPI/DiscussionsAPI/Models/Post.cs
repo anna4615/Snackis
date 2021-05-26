@@ -12,6 +12,7 @@ namespace PostsAPI.Models
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }
         public int? PostId { get; set; }
+        public ICollection<Post> Posts { get; set; }
         public DateTime Date { get; set; }
         public string Text { get; set; }
         public bool IsPrivate { get; set; } = false;

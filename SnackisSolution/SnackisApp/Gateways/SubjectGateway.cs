@@ -30,6 +30,14 @@ namespace SnackisApp.Gateways
             return JsonSerializer.Deserialize<List<Subject>>(apiResponse);
         }
 
+        public async Task<Subject> GetSubject(int id)
+        {
+            var response = await _client.GetAsync(_configuration["SubjectAPILocal"] + "/" + id);
+            Subject returnValue = await response.Content.ReadFromJsonAsync<Subject>();
+
+            return returnValue;
+        }
+
         public async Task<Subject> PostSubject(Subject subject)
         {
             var response = await _client.PostAsJsonAsync(_configuration["SubjectAPILocal"], subject);
@@ -38,13 +46,16 @@ namespace SnackisApp.Gateways
             return returnValue;
         }
 
-        public async Task<Subject> PutSubject(int editId, Subject subject)
+        public async Task PutSubject(int editId, Subject subject)
         {
-            throw new NotImplementedException();
+            await _client.PutAsJsonAsync(_configuration["SubjectAPILocal"] + "/" +  editId, subject);
         }
-        public async Task<Subject> DeleteSubject(int deleteId)
+
+        public async Task DeleteSubject(int deleteId)
         {
-            throw new NotImplementedException();
+            await _client.DeleteAsync(_configuration["SubjectAPILocal"] + "/" + deleteId);
         }
+
+       
     }
 }

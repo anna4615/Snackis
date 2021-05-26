@@ -9,9 +9,10 @@ namespace SnackisApp.Gateways
     public interface ISubjectGateway
     {
         Task<List<Subject>> GetSubjects();
+        Task<Subject> GetSubject(int id);
         Task<Subject> PostSubject(Subject subject);
-        Task<Subject> PutSubject(int editId, Subject subject);
-        Task<Subject> DeleteSubject(int deleteId);
+        Task PutSubject(int editId, Subject subject);
+        Task DeleteSubject(int deleteId);
 
       
     }
