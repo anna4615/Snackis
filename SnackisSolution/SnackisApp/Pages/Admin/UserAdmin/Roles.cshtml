@@ -2,3 +2,49 @@
 @model SnackisApp.Pages.Admin.UserAdmin.RolesModel
 @{
 }
+
+<h1 class="text-center mb-5">Användaradmin</h1>
+
+<h4>Skapa roll</h4>
+
+<div class="col">
+ <div class="row">
+  <form method="post">
+   <div class="form-group">
+	<label for="RoleName">Namn</label>
+	<input asp-for="RoleName" class="form-control" />
+	<span asp-validation-for="RoleName" class="text-danger"></span>
+   </div>
+   <div class="form-group">
+	<input type="submit" value="Spara roll" class="btn btn-primary" />
+   </div>
+  </form>
+ </div>
+</div>
+
+@if (Model.Roles.Count != 0)
+{
+	<table class="table table-sm">
+	 <thead>
+	  <tr>
+	   <th>
+		Roller
+	   </th>
+	  </tr>
+	 </thead>
+
+	 <tbody>
+			@foreach (var role in Model.Roles)
+			{
+		  <tr>
+		   <td>
+						@Html.DisplayFor(modelItem => role.Name)
+		   </td>
+		  </tr>
+			}
+	  <tr>
+	   <td></td>
+	  </tr>
+	 </tbody>
+	</table>
+}	

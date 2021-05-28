@@ -25,6 +25,8 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
 
+       // public bool IsAdmin { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -63,6 +65,12 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    return Page();
+                }
+
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    ModelState.AddModelError(string.Empty, "Användare med aministratörsrättigheter kan inte tas bort.");
                     return Page();
                 }
             }

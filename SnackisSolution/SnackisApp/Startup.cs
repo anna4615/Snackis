@@ -32,7 +32,17 @@ namespace SnackisApp
             services.AddHttpClient<SubjectGateway>();
             services.AddHttpClient<PostGateway>();
 
-            services.AddRazorPages();
+            services.AddAuthorization(o =>
+            {
+                o.AddPolicy("MustBeAdmin", policy => policy.RequireRole("Admin"));
+                o.AddPolicy("MustBeMember", policy => policy.RequireRole("Medlem"));
+            });
+
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Admin", "MustBeAdmin");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
