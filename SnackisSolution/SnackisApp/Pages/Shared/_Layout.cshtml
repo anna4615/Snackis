@@ -2,10 +2,12 @@
 
 @using Models;
 @inject Gateways.ISubjectGateway _subjectGateway;
+@inject Gateways.IForumGateway _forumGateway;
 
 @{
     ViewData["Title"] = "Home page";
     List<Subject> subjects = _subjectGateway.GetSubjects().Result.ToList();
+    Forum Forum = _forumGateway.GetForums().Result.ToList().FirstOrDefault();
 }
 
 <html lang="en">
@@ -39,6 +41,8 @@
             </div>
         </nav>
     </header>
+
+
     <div class="container pr-3">
 
         <div class="row">
@@ -55,6 +59,7 @@
 
             <div class="col">
                 <main role="main" class="pb-3">
+                    <h1 class="text-center">@Forum.Name</h1>
                     @RenderBody()
                 </main>
             </div>

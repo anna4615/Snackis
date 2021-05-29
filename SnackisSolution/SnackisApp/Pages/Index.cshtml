@@ -1,16 +1,68 @@
 ﻿@page
 @model IndexModel;
 
-
-
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Discussion";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<h4>Skriv inlägg</h4>
+
+<div class="col">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Post.Title"></label>
+                <input asp-for="Post.Title" class="form-control" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <input class="form-check-input" type="checkbox" asp-for="Post.IsPrivate"  />
+                <label class="form-check-label" asp-for="Post.IsPrivate"></label>
+                <span asp-validation-for="Post.IsPrivate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.OnlyForUserName"></label>
+                <input asp-for="Post.OnlyForUserName" class="form-control" />
+                <span asp-validation-for="Post.OnlyForUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.Text"></label>
+                <textarea asp-for="Post.Text" class="form-control"></textarea>
+                <span asp-validation-for="Post.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Spara inlägg" class="btn btn-primary" />
+            </div>
+        </form>
 </div>
 
+
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Posts[0].Title)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @if (Model.Posts != null)
+        {
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Title)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
 

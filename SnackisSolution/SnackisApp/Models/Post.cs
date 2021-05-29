@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace SnackisApp.Models
         public int Id { get; set; }
 
         [JsonPropertyName("userId")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [JsonPropertyName("subjectId")]
         public int SubjectId { get; set; }
@@ -25,17 +26,22 @@ namespace SnackisApp.Models
         
         [JsonPropertyName("date")]
         public DateTime Date { get; set; }
-        
+
+        [JsonPropertyName("title")]
+        [Display(Name = "Rubrik")]
+        public string Title { get; set; }
+
         [JsonPropertyName("text")]
+        [Display(Name = "Skriv ditt inlägg här")]
         public string Text { get; set; }
         
         [JsonPropertyName("isPrivate")]
-        public bool IsPrivate { get; set; } = false;
+        public bool IsPrivate { get; set; }
         
         [JsonPropertyName("onlyForUserName")]
         public string OnlyForUserName { get; set; }
         
         [JsonPropertyName("isOffensiv")]
-        public bool IsOffensiv { get; set; } = false;
+        public bool IsOffensiv { get; set; }
     }
 }

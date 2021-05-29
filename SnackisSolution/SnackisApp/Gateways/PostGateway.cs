@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -37,7 +38,10 @@ namespace SnackisApp.Gateways
 
         public async Task<Post> PostPost(Post post)
         {
-            throw new NotImplementedException();
+            var response = await _client.PostAsJsonAsync(_configuration["PostsAPILocal"], post);
+            Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
+
+            return returnValue;
         }
 
         public async Task<Post> PutPost(int editId, Post post)
