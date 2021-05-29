@@ -1,4 +1,13 @@
 ﻿<!DOCTYPE html>
+
+@using Models;
+@inject Gateways.ISubjectGateway _subjectGateway;
+
+@{
+    ViewData["Title"] = "Home page";
+    List<Subject> subjects = _subjectGateway.GetSubjects().Result.ToList();
+}
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,17 +32,33 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
                 <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container pr-3">
+
+        <div class="row">
+            <div class="col-md-auto mr-4 border-right">
+                <h5>Ämnen</h5>
+                @*@<partial name="_SideMenu.cshtml" />*@
+                @foreach (var subject in subjects)
+                {
+                    <div>
+                        <a href="@Url.Content($"~/Discussion?id={subject.Id}")">@subject.Name</a>
+                    </div>
+                }
+            </div>
+
+            <div class="col">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

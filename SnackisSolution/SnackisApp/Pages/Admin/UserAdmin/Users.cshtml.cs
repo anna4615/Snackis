@@ -20,11 +20,14 @@ namespace SnackisApp.Pages.Admin.UserAdmin
             _userManager = userManager;
         }
 
-        //public bool IsAdmin { get; set; }
+        public bool UserIsAdmin { get; set; }
         //public bool IsMember { get; set; }
 
         public SnackisUser CurrentUser { get; set; }
         public List<SnackisUser> Users { get; set; }
+        public List<SnackisUser> Admins { get; set; }
+        public List<SnackisUser> Members { get; set; }
+        public List<SnackisUser> BlockedUsers { get; set; }
         public List<IdentityRole> Roles { get; set; }
 
 
@@ -38,38 +41,65 @@ namespace SnackisApp.Pages.Admin.UserAdmin
         public string Role { get; set; }
 
         public bool IsLastAdmin { get; set; }
+        public bool MemberIsAdmin { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //IsAdmin = await _userManager.IsInRoleAsync(CurrentUser, "Admin");
+            //UserIsAdmin = await _userManager.IsInRoleAsync(CurrentUser, "Admin");
             //IsMember = await _userManager.IsInRoleAsync(CurrentUser, "Medlem");
 
-            Users = _userManager.Users.ToList();
-            Roles = _roleManager.Roles.ToList();
+            Roles = _roleManager.Roles.OrderBy(r => r.Name).ToList();
+            Users = _userManager.Users.OrderBy(u => u.UserName).ToList();
 
             IList<SnackisUser> adminSearch = await _userManager.GetUsersInRoleAsync("Admin");
             int numberOfAdmins = adminSearch.Count();
 
             IsLastAdmin = false;
+            MemberIsAdmin = false;
 
             if (RemoveUserId != null)
             {
-                if (numberOfAdmins <= 1 && Role == "Admin")
+                if (Role == "Admin")
                 {
-                    IsLastAdmin = true;
+                    if (numberOfAdmins <= 1)
+                    {
+                        IsLastAdmin = true;
+                        return Page();
+                    }
                 }
-                else
+
+                if (Role == "Medlem")
                 {
-                    SnackisUser user = await _userManager.FindByIdAsync(RemoveUserId);
-                    IdentityResult result = await _userManager.RemoveFromRoleAsync(user, Role);
+                    MemberIsAdmin = _userManager.GetUsersInRoleAsync("Admin").Result.ToList().FirstOrDefault(u => u.Id == RemoveUserId) != null;
+
+                    if (MemberIsAdmin)
+                    {
+                        return Page();
+                    }
+
                 }
+
+                SnackisUser user = await _userManager.FindByIdAsync(RemoveUserId);
+                IdentityResult result = await _userManager.RemoveFromRoleAsync(user, Role);
+
             }
 
             if (AddUserId != null)
             {
                 SnackisUser user = await _userManager.FindByIdAsync(AddUserId);
-                IdentityResult result = await _userManager.AddToRoleAsync(user, Role);
+                // bool userIsMember = _userManager.GetUsersInRoleAsync("Medlem").Result.ToList().FirstOrDefault(u => u.Id == AddUserId) != null;
+
+                if (Role == "Admin" /*&& userIsMember == false*/)
+                {
+                    IdentityResult result = await _userManager.AddToRoleAsync(user, "Medlem"); //Funkar även om user redan är Medlem, vilket är det vanliga fallet
+                    result = await _userManager.AddToRoleAsync(user, Role);
+                }
+
+                else
+                {
+                    IdentityResult result = await _userManager.AddToRoleAsync(user, Role);
+                }
             }
 
             return Page();
