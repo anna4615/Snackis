@@ -9,6 +9,7 @@ namespace SnackisApp.Gateways
     public interface IPostGateway
     {
         Task<List<Post>> GetPosts();
+        Task<Post> GetPost(int id);
         Task<Post> PostPost(Post post);
         Task<Post> PutPost(int editId, Post post);
         Task<Post> DeletePost(int deleteId);

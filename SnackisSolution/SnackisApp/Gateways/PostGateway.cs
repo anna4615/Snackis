@@ -30,6 +30,14 @@ namespace SnackisApp.Gateways
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
 
+        public async Task<Post> GetPost(int id)
+        {
+            var response = await _client.GetAsync(_configuration["PostsAPILocal"] + "/" + id);
+            Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
+
+            return returnValue;
+        }
+
         public async Task<Post> DeletePost(int deleteId)
         {
             throw new NotImplementedException();

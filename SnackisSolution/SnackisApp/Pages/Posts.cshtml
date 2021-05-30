@@ -1,0 +1,17 @@
+﻿@page
+@model SnackisApp.Pages.PostsModel
+@{
+}
+
+<h4 class="text-center">@Model.Subject.Name</h4>
+
+<div class="col mx-3">
+    <div class="border">
+        <div class="m-3">
+            <h6 class="mb-1">@Model.Users.Where(u => u.Id == Model.ParentPost.UserId).FirstOrDefault().UserName</h6>
+            <p class="small">@Model.ParentPost.Date</p>
+            <h5>@Model.ParentPost.Title</h5>
+            <p">@Model.ParentPost.Text</p>
+        </div>
+    </div>
+</div>

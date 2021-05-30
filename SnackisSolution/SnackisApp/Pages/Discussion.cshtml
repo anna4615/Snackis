@@ -2,3 +2,50 @@
 @model SnackisApp.Pages.DiscussionModel
 @{
 }
+
+<h4 class="text-center">@Model.Subject.Name</h4>
+
+<div>
+    <a asp-page="./CreatePost" asp-route-SubjectId="@Model.Subject.Id">Skapa inlägg </a>
+</div>
+
+<table class="table table-sm">
+    @*<thead>
+            <tr>
+                <th>
+                    @Model.Subject.Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>*@
+
+
+    <tbody>
+        @if (Model.Posts != null)
+        {
+            @foreach (var post in Model.Posts)
+            {
+        <tr>
+            <th>
+                <a asp-page="./Posts" asp-route-PostId="@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
+            </th>
+            @if (post.Text != null && post.Text.Length > 100)
+            {
+                <td>
+                    @post.Text.Substring(0, 100)...
+                </td>
+            }
+            else
+            {
+                <td>
+                    @post.Text
+                </td>
+            }
+
+        </tr>
+
+            }
+        }
+    </tbody>
+</table>
+

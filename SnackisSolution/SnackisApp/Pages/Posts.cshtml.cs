@@ -11,13 +11,13 @@ using SnackisApp.Models;
 
 namespace SnackisApp.Pages
 {
-    public class DiscussionModel : PageModel
+    public class PostsModel : PageModel
     {
         private readonly UserManager<SnackisUser> _userManager;
         private readonly ISubjectGateway _subjectGateway;
         private readonly IPostGateway _postGateway;
 
-        public DiscussionModel(UserManager<SnackisUser> userManager,
+        public PostsModel(UserManager<SnackisUser> userManager,
             ISubjectGateway subjectGateway, IPostGateway postGateway)
         {
             _userManager = userManager;
@@ -25,18 +25,27 @@ namespace SnackisApp.Pages
             _postGateway = postGateway;
         }
 
+        public List<SnackisUser> Users { get; set; }
+
+        public string UserName { get; set; }
+        public List<Post> Answers { get; set; }
+        public Post ParentPost { get; set; }
         public Subject Subject { get; set; }
-        public List<Post> Posts { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int SubjectId { get; set; }
+        public int PostId { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Subject = await _subjectGateway.GetSubject(SubjectId);
-            Posts = await _postGateway.GetPosts();
-            Posts = Posts.Where(p => p.SubjectId == SubjectId && p.PostId == null).ToList();
+            Users = _userManager.Users.ToList();
+
+            var posts = await _postGateway.GetPosts();
+
+            ParentPost = posts.Where(p => p.Id == PostId).FirstOrDefault();
+            Answers = posts.Where(p => p.PostId == ParentPost.Id).ToList();
+
+            Subject = await _subjectGateway.GetSubject(ParentPost.SubjectId);
 
             return Page();
         }

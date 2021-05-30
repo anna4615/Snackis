@@ -41,6 +41,7 @@ namespace SnackisApp
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeFolder("/Admin", "MustBeAdmin");
+                options.Conventions.AuthorizePage("/CreatePost", "MustBeMember");
             });
 
         }
