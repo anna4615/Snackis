@@ -1,17 +1,42 @@
 ﻿@page
 @model SnackisApp.Pages.PostsModel
 @{
+    TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
 }
 
 <h4 class="text-center">@Model.Subject.Name</h4>
 
+
+
 <div class="col mx-3">
-    <div class="border">
+    <div class="border m-2">
         <div class="m-3">
-            <h6 class="mb-1">@Model.Users.Where(u => u.Id == Model.ParentPost.UserId).FirstOrDefault().UserName</h6>
-            <p class="small">@Model.ParentPost.Date</p>
+            <div class="row mx-0 justify-content-between">
+                <h6 class="mb-1">@Model.Users.Where(u => u.Id == Model.ParentPost.UserId).FirstOrDefault().UserName</h6>
+                <div>
+                    <a asp-page="./CreatePost" asp-route-SubjectId="@Model.Subject.Id" asp-route-PostId="@Model.ParentPost.Id">Skriv svar</a>
+                </div>
+            </div>
+            
+            <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(Model.ParentPost.Date, timeZone)</p>
             <h5>@Model.ParentPost.Title</h5>
             <p">@Model.ParentPost.Text</p>
         </div>
     </div>
+</div>
+
+
+
+<div class="col ml-5 pr-5">
+    @foreach (var post in Model.Answers)
+    {
+        <div class="border m-2">
+            <div class="m-3">
+                <h6 class="mb-1">@Model.Users.Where(u => u.Id == post.UserId).FirstOrDefault().UserName</h6>
+                <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(post.Date, timeZone).ToString("g")</p>
+                <h5>Svar till fråga "@Model.ParentPost.Title"</h5>
+                <p>@post.Text</p>
+            </div>
+        </div>
+    }
 </div>

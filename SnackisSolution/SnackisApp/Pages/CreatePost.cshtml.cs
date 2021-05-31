@@ -57,8 +57,12 @@ namespace SnackisApp.Pages
 
             await _postGateway.PostPost(Post);
 
-            return Redirect($"./Discussion?SubjectId={SubjectId}");
-                                   // Discussion?SubjectId = 10
+            if (PostId != 0)
+            {
+                return Redirect($"./Posts?PostId={PostId}");
+            }
+
+                return Redirect($"./Discussion?SubjectId={SubjectId}");
         }
     }
 }
