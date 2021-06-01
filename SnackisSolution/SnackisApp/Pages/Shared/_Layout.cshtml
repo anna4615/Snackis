@@ -59,7 +59,10 @@
 
             <div class="col">
                 <main role="main" class="pb-3">
+                    @if (Forum != null)
+                    {
                     <h1 class="text-center">@Forum.Name</h1>
+                    }
                     @RenderBody()
                 </main>
             </div>

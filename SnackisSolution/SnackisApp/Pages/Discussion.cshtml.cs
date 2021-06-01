@@ -26,17 +26,21 @@ namespace SnackisApp.Pages
         }
 
         public Subject Subject { get; set; }
-        public List<Post> Posts { get; set; }
+        public List<Post> AllPosts { get; set; }
+        public List<Post> ParentPosts { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int SubjectId { get; set; }
+
+        public int NumerOfAnswers { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync()
         {
             Subject = await _subjectGateway.GetSubject(SubjectId);
-            Posts = await _postGateway.GetPosts();
-            Posts = Posts.Where(p => p.SubjectId == SubjectId && p.PostId == null).ToList();
+            AllPosts = await _postGateway.GetPosts();
+
+            ParentPosts = AllPosts.Where(p => p.SubjectId == SubjectId && p.PostId == null).ToList();
 
             return Page();
         }

@@ -56,6 +56,13 @@ namespace SnackisApp.Gateways
             await _client.DeleteAsync(_configuration["SubjectAPILocal"] + "/" + deleteId);
         }
 
-       
+        public async Task SeedSubjects(List<Subject> subjects)
+        {        
+            foreach (var subject in subjects)
+            {
+                var response = await _client.PostAsJsonAsync(_configuration["SubjectAPILocal"], subject);
+                Subject returnValue = await response.Content.ReadFromJsonAsync<Subject>();
+            }
+        }       
     }
 }

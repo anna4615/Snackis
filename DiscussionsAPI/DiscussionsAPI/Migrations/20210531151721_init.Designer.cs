@@ -10,8 +10,8 @@ using PostsAPI.Data;
 namespace PostsAPI.Migrations
 {
     [DbContext(typeof(SnackisContext))]
-    [Migration("20210529123445_UserIdtoString")]
-    partial class UserIdtoString
+    [Migration("20210531151721_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,9 @@ namespace PostsAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")

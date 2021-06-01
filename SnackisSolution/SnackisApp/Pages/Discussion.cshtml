@@ -1,6 +1,7 @@
 ﻿@page
 @model SnackisApp.Pages.DiscussionModel
 @{
+    int NumberOfAnswers = 0;
 }
 
 <h4>@Model.Subject.Name</h4>
@@ -21,28 +22,38 @@
 
 
     <tbody>
-        @if (Model.Posts != null)
+        @if (Model.ParentPosts != null)
         {
-            @foreach (var post in Model.Posts)
+            @foreach (var post in Model.ParentPosts)
             {
-        <tr>
-            <th>
-                <a asp-page="./Posts" asp-route-PostId="@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
-            </th>
-            @if (post.Text != null && post.Text.Length > 100)
-            {
-                <td>
-                    @post.Text.Substring(0, 100)...
-                </td>
-            }
-            else
-            {
-                <td>
-                    @post.Text
-                </td>
-            }
 
-        </tr>
+                NumberOfAnswers = Model.AllPosts.Where(p => p.PostId != null).Where(p => p.PostId == post.Id).Count();
+                NumberOfAnswers = Model.AllPosts.Where(p => p.PostId != null && p.PostId == post.Id).Count();
+
+
+                <tr>
+                    <th>
+                        <a asp-page="./Posts" asp-route-PostId="@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
+                    </th>
+                    @if (post.Text != null && post.Text.Length > 100)
+                    {
+                        <td>
+                            @post.Text.Substring(0, 100)...
+                        </td>
+                    }
+
+                    else
+                    {
+                        <td>
+                            @post.Text
+                        </td>
+                    }
+
+                    <td>
+                        Antal svar: @NumberOfAnswers
+                    </td>
+
+                </tr>
 
             }
         }
