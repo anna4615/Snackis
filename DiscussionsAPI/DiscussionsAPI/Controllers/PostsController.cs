@@ -86,7 +86,7 @@ namespace PostsAPI.Controllers
 
         // DELETE: api/Posts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePost(int id)
+        public async Task<ActionResult<Post>> DeletePost(int id)
         {
             var post = await _context.Post.FindAsync(id);
             if (post == null)
@@ -97,7 +97,7 @@ namespace PostsAPI.Controllers
             _context.Post.Remove(post);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return post;
         }
 
         private bool PostExists(int id)

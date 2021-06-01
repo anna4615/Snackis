@@ -31,7 +31,7 @@
                 NumberOfAnswers = Model.AllPosts.Where(p => p.PostId != null && p.PostId == post.Id).Count();
 
 
-                <tr>
+                <tr class="border-bottom">
                     <th>
                         <a asp-page="./Posts" asp-route-PostId="@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
                     </th>

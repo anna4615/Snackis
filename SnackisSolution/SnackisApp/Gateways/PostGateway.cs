@@ -40,7 +40,10 @@ namespace SnackisApp.Gateways
 
         public async Task<Post> DeletePost(int deleteId)
         {
-            throw new NotImplementedException();
+            var respons = await _client.DeleteAsync(_configuration["PostsAPILocal"] + "/" + deleteId);
+            Post post = await respons.Content.ReadFromJsonAsync<Post>();
+
+            return post;
         }
 
 
