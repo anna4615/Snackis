@@ -106,10 +106,19 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                     await UploadedImage.CopyToAsync(fileStream);
                 }
 
+                string deletePicture = user.Picture;
+
                 user.Picture = UploadedImage.FileName;
+                await _userManager.UpdateAsync(user);
+
+                // Delete image if no one else uses it
+                if (_userManager.Users.Where(u => u.Picture == deletePicture).FirstOrDefault() == null)
+                {
+                    System.IO.File.Delete($"./wwwroot/img/{deletePicture}");
+                }
+
             }
 
-            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

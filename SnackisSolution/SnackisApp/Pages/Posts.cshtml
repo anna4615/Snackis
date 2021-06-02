@@ -13,15 +13,27 @@
     <div class="border m-2">
         <div class="m-3">
             <p class="text-hide m-0">@(user = Model.Users.Where(u => u.Id == Model.ParentPost.UserId).FirstOrDefault())</p>
-
-            <div class="row mx-0">
-                <img style="max-height: 50px" src="img/@user.Picture" />
-                <h6 class="mb-1 mx-5">@user.UserName</h6>
-                <div class="mx-5">
-                    <a asp-page="./CreatePost" asp-route-SubjectId="@Model.Subject.Id" asp-route-PostId="@Model.ParentPost.Id">Skriv svar</a>
+            @if (user != null)
+            {
+                <div class="row mx-0">
+                    <img style="max-height: 50px" src="img/@user.Picture" />
+                    <h6 class="mb-1 mx-5">@user.UserName</h6>
+                    <div class="mx-5">
+                        <a asp-page="./CreatePost" asp-route-SubjectId="@Model.Subject.Id" asp-route-PostId="@Model.ParentPost.Id">Skriv svar</a>
+                    </div>
                 </div>
-            </div>
-            <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(Model.ParentPost.Date, timeZone)</p>
+            }
+            else
+            {
+                <div class="row mx-0">
+                    <img style="max-height: 50px" src="img/default.png" />
+                    <h6 class="mb-1 mx-5">Okänd användare</h6>
+                    <div class="mx-5">
+                        <p>Det går inte att svara på det här inlägget</p>
+                    </div>
+                </div>
+            }
+            <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(Model.ParentPost.Date, timeZone).ToString("g")</p> @* g = Datum + tid utan sekunder*@
             <h5>@Model.ParentPost.Title</h5>
             <p">@Model.ParentPost.Text</p>
         </div>
@@ -35,11 +47,21 @@
 
         <div class="border m-2">
             <div class="m-3">
-                <div class="row mx-0">
-                    <img style="max-height: 50px" src="img/@user.Picture" /> @*Varför inte ~/ innan img som det är ovan?*@
-                    <h6 class="mb-1 mx-5">@user.UserName</h6>
-                </div>
-                <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(post.Date, timeZone).ToString("g")</p>
+                @if (user != null)
+                {
+                    <div class="row mx-0">
+                        <img style="max-height: 50px" src="img/@user.Picture" /> @*Varför inte ~/ innan img som det är ovan?*@
+                        <h6 class="mb-1 mx-5">@user.UserName</h6>
+                    </div>
+                }
+                else
+                {
+                    <div class="row mx-0">
+                        <img style="max-height: 50px" src="img/default.png" />
+                        <h6 class="mb-1 mx-5">Okänd användare</h6>
+                    </div>
+                }
+                <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(post.Date, timeZone).ToString("g")</p>  @* g = Datum + tid utan sekunder*@
                 <h5>Svar till fråga "@Model.ParentPost.Title"</h5>
                 <p>@post.Text</p>
             </div>
