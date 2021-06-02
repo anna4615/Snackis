@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +45,9 @@ namespace SnackisApp.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        [BindProperty]
+        public IFormFile UploadedImage { get; set; }
 
         public class InputModel
         {
@@ -90,13 +95,23 @@ namespace SnackisApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                // spara bild till wwwroot/img
+                if (UploadedImage != null)
+                {
+                    string fileLocation = $"./wwwroot/img/{UploadedImage.FileName}";
+                    using (FileStream fileStream = new FileStream(fileLocation, FileMode.Create))
+                    {
+                        await UploadedImage.CopyToAsync(fileStream);
+                    }
+                }
+
                 var user = new SnackisUser
                 {
                     UserName = Input.UserName,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Email = Input.Email,
-                    Picture = Input.Picture
+                    Picture = UploadedImage != null ? UploadedImage.FileName : "default.png"
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

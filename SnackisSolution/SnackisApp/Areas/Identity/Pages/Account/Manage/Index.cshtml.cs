@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -31,6 +33,9 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        public IFormFile UploadedImage { get; set; }
+
         public class InputModel
         {
             [Phone]
@@ -45,13 +50,14 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var picture = user.Picture;
 
             Username = userName;
 
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                Picture = user.Picture
+                Picture = picture
             };
         }
 
@@ -92,9 +98,15 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.Picture != user.Picture)
+            if (UploadedImage.FileName != user.Picture)
             {
-                user.Picture = Input.Picture;
+                string file = "./wwwroot/img/" + UploadedImage.FileName;
+                using (FileStream fileStream = new FileStream(file, FileMode.Create))
+                {
+                    await UploadedImage.CopyToAsync(fileStream);
+                }
+
+                user.Picture = UploadedImage.FileName;
             }
 
             await _userManager.UpdateAsync(user);

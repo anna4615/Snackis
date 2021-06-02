@@ -30,6 +30,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>
                                 Användarnamn
                             </th>
@@ -54,6 +55,9 @@
                             if (await Model._userManager.IsInRoleAsync(user, Model.Roles[i].Name))
                             {
                                 <tr class="border-bottom">
+                                    <td>
+                                        <img style="max-height: 30px" src="~/img/@user.Picture" title="Användarbild" alt="Användarbild" />
+                                    </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => user.UserName)
                                     </td>
@@ -88,6 +92,7 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>
                             Användarnamn
                         </th>
@@ -118,6 +123,9 @@
                         if (isBlocked)
                         {
                             <tr class="border-bottom">
+                                <td>
+                                    <img style="max-height: 30px" src="~/img/@user.Picture" title="Användarbild" alt="Användarbild" />
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => user.UserName)
                                 </td>

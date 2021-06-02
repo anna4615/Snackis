@@ -26,10 +26,7 @@ namespace SnackisApp.Areas.Identity.Data
         public string LastName { get; set; }
 
         [PersonalData]
-        public string Picture { get; set; }
-
-
-      
+        public string Picture { get; set; }     
 
     }
 }
