@@ -3,6 +3,10 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "SnackisUsersContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:SnackisUsersContextConnection"
     }
   }
 }

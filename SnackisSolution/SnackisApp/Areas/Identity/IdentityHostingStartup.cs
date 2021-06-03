@@ -18,7 +18,7 @@ namespace SnackisApp.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<SnackisUsersContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("SnackisUsersContextConnection")));
+                        context.Configuration.GetConnectionString("SnackisContext")));
 
                 services.AddDefaultIdentity<SnackisUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()

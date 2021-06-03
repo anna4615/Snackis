@@ -24,7 +24,7 @@ namespace SnackisApp.Gateways
 
         public async Task<List<Post>> GetPosts()
         {
-            var response = await _client.GetAsync(_configuration["PostsAPILocal"]);
+            var response = await _client.GetAsync(_configuration["PostsAPI"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
 
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
@@ -32,7 +32,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Post> GetPost(int id)
         {
-            var response = await _client.GetAsync(_configuration["PostsAPILocal"] + "/" + id);
+            var response = await _client.GetAsync(_configuration["PostsAPI"] + "/" + id);
             Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
 
             return returnValue;
@@ -40,7 +40,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Post> DeletePost(int deleteId)
         {
-            var respons = await _client.DeleteAsync(_configuration["PostsAPILocal"] + "/" + deleteId);
+            var respons = await _client.DeleteAsync(_configuration["PostsAPI"] + "/" + deleteId);
             Post post = await respons.Content.ReadFromJsonAsync<Post>();
 
             return post;
@@ -49,7 +49,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Post> PostPost(Post post)
         {
-            var response = await _client.PostAsJsonAsync(_configuration["PostsAPILocal"], post);
+            var response = await _client.PostAsJsonAsync(_configuration["PostsAPI"], post);
             Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
 
             return returnValue;

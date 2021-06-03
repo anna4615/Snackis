@@ -34,6 +34,13 @@ namespace SnackisApp.Pages
             List<Forum> forums = await _forumGateway.GetForums();
             Forum forum = forums.FirstOrDefault();
 
+            if (forum == null)
+            {
+                forum = HelpMethods.Content.CreateForum();
+
+                await _forumGateway.PostForum(forum);
+            }
+
             List<SnackisUser> users = _userManager.Users.ToList();
 
             List<Subject> subjects = await _subjectGateway.GetSubjects();

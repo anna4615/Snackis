@@ -24,7 +24,7 @@ namespace SnackisApp.Gateways
 
         public async Task<List<Forum>> GetForums()
         {
-            var respons = await _client.GetAsync(_configuration["ForumAPILocal"]);
+            var respons = await _client.GetAsync(_configuration["ForumAPI"]);
             string apiRespons = await respons.Content.ReadAsStringAsync();
 
             return JsonSerializer.Deserialize<List<Forum>>(apiRespons);
@@ -32,7 +32,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Forum> PostForum(Forum forum)
         {
-            var response = await _client.PostAsJsonAsync(_configuration["ForumAPILocal"], forum);
+            var response = await _client.PostAsJsonAsync(_configuration["ForumAPI"], forum);
             Forum returnValue = await response.Content.ReadFromJsonAsync<Forum>();
 
             return returnValue;

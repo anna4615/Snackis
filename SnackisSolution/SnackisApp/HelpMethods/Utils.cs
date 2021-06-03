@@ -10,7 +10,7 @@ namespace SnackisApp.HelpMethods
         public static int GetRandomNumber(int maxValue)
         {
             Random random = new Random();
-            int number = random.Next(1, maxValue);
+            int number = random.Next(maxValue);
 
             return number;
         }

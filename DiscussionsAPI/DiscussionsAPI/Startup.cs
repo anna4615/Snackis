@@ -36,10 +36,9 @@ namespace PostsAPI
             });
 
             services.AddDbContext<SnackisContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SnackisContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("LocalSnackisContext")));
 
-            //services.AddDbContext<ForumContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("ForumContext")));
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,6 +19,15 @@ namespace SnackisApp.HelpMethods
             _subjectGateway = subjectGateway;
         }
 
+        public static Forum CreateForum()
+        {
+            Forum forum = new Forum();
+            forum.Name = "Trädgårdssnack";
+
+            return forum;
+
+        }
+
 
         public static List<Subject> CreateSubjectList(Forum forum)
         {

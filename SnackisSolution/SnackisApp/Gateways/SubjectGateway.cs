@@ -24,7 +24,7 @@ namespace SnackisApp.Gateways
 
         public async Task<List<Subject>> GetSubjects()
         {
-            var response = await _client.GetAsync(_configuration["SubjectAPILocal"]);
+            var response = await _client.GetAsync(_configuration["SubjectAPI"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
 
             return JsonSerializer.Deserialize<List<Subject>>(apiResponse);
@@ -32,7 +32,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Subject> GetSubject(int id)
         {
-            var response = await _client.GetAsync(_configuration["SubjectAPILocal"] + "/" + id);
+            var response = await _client.GetAsync(_configuration["SubjectAPI"] + "/" + id);
             Subject returnValue = await response.Content.ReadFromJsonAsync<Subject>();
 
             return returnValue;
@@ -40,7 +40,7 @@ namespace SnackisApp.Gateways
 
         public async Task<Subject> PostSubject(Subject subject)
         {
-            var response = await _client.PostAsJsonAsync(_configuration["SubjectAPILocal"], subject);
+            var response = await _client.PostAsJsonAsync(_configuration["SubjectAPI"], subject);
             Subject returnValue = await response.Content.ReadFromJsonAsync<Subject>();
 
             return returnValue;
@@ -48,19 +48,19 @@ namespace SnackisApp.Gateways
 
         public async Task PutSubject(int editId, Subject subject)
         {
-            await _client.PutAsJsonAsync(_configuration["SubjectAPILocal"] + "/" +  editId, subject);
+            await _client.PutAsJsonAsync(_configuration["SubjectAPI"] + "/" +  editId, subject);
         }
 
         public async Task DeleteSubject(int deleteId)
         {
-            await _client.DeleteAsync(_configuration["SubjectAPILocal"] + "/" + deleteId);
+            await _client.DeleteAsync(_configuration["SubjectAPI"] + "/" + deleteId);
         }
 
         public async Task SeedSubjects(List<Subject> subjects)
         {        
             foreach (var subject in subjects)
             {
-                var response = await _client.PostAsJsonAsync(_configuration["SubjectAPILocal"], subject);
+                var response = await _client.PostAsJsonAsync(_configuration["SubjectAPI"], subject);
                 Subject returnValue = await response.Content.ReadFromJsonAsync<Subject>();
             }
         }       
