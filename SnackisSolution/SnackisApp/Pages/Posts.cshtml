@@ -34,7 +34,17 @@
                 </div>
             }
             <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(Model.ParentPost.Date, timeZone).ToString("g")</p> @* g = Datum + tid utan sekunder*@
-            <h5>@Model.ParentPost.Title</h5>
+            <div class="row justify-content-between mx-0">
+                <h5>@Model.ParentPost.Title</h5>
+                @if (Model.ParentPost.IsOffensiv)
+                {
+                    <p class="mr-3 text-danger">Inlägget är anmält för olämpligt innehåll</p>
+                }
+                else
+                {
+                    <a class="mr-3" href="./Report/?ReportPostId=@Model.ParentPost.Id">Anmäl för olämpligt innehåll</a>
+                }
+            </div>
             <p">@Model.ParentPost.Text</p>
         </div>
     </div>
@@ -62,9 +72,19 @@
                     </div>
                 }
                 <p class="small">@TimeZoneInfo.ConvertTimeFromUtc(post.Date, timeZone).ToString("g")</p>  @* g = Datum + tid utan sekunder*@
+                <div class="row justify-content-between mx-0">
                 <h5>Svar till fråga "@Model.ParentPost.Title"</h5>
-                <p>@post.Text</p>
+                    @if (post.IsOffensiv)
+                    {
+                        <p class="text-danger">Inlägget är anmält för olämpligt innehåll</p>
+                    }
+                    else
+                    {
+                        <a href="./Report/?ReportPostId=@post.Id">Anmäl för olämpligt innehåll</a>
+                    }
+                </div>
+                    <p>@post.Text</p>
+                </div>
             </div>
-        </div>
     }
 </div>

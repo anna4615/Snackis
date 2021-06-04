@@ -11,6 +11,7 @@
 
     var Users = UserManager.Users;
     TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+    SnackisUser user;
 }
 
 <h4>@Model.Subject.Name</h4>
@@ -30,24 +31,37 @@
     <tbody>
         @foreach (var post in Model.Posts)
         {
-        <tr class="border-bottom">
-            <td>
-                @Users.Where(u => u.Id == post.UserId).FirstOrDefault().UserName
-            </td>
-            <td class="pl-3">
-                @TimeZoneInfo.ConvertTime(post.Date, timeZone).ToString("g")
-            </td>
-            <td>
-                @post.Title
-            </td>
-            <td class="pl-3">
-                @post.Text
-            </td>
-            <td>
-                <a href="./PostDelete?PostId=@post.Id">radera</a>
-                @*<a asp-page="/PostDelete" asp-route-PostId="@post.Id">Radera</a>*@ @*Det här blir inte en länk, vet inte varför*@
-            </td>
-        </tr>
+            user = Users.Where(u => u.Id == post.UserId).FirstOrDefault();
+
+            <tr class="border-bottom">
+                @if (user != null)
+                {
+                    <td>
+                        <img style="max-height: 30px" src="/img/@user.Picture" title="Användarbild" alt="Användarbild" />
+                    </td>
+                    <td>
+                        @user.UserName
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                    <td>Okänd&nbspanvändare</td>
+                }
+                <td class="pl-3">
+                    @TimeZoneInfo.ConvertTime(post.Date, timeZone).ToString("g")
+                </td>
+                <td>
+                    @post.Title
+                </td>
+                <td class="pl-3">
+                    @post.Text
+                </td>
+                <td>
+                    <a href="./PostDelete?PostId=@post.Id">radera</a>
+                    @*<a asp-page="/PostDelete" asp-route-PostId="@post.Id">Radera</a>*@ @*Det här blir inte en länk, vet inte varför*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>

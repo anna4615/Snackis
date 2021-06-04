@@ -42,6 +42,7 @@ namespace SnackisApp
             {
                 options.Conventions.AuthorizeFolder("/Admin", "MustBeAdmin");
                 options.Conventions.AuthorizePage("/CreatePost", "MustBeMember");
+                options.Conventions.AuthorizePage("/Report", "MustBeMember");
             });
 
         }

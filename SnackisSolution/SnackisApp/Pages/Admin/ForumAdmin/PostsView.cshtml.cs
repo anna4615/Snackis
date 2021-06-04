@@ -30,7 +30,7 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
         public async Task<IActionResult> OnGetAsync()
         {
             Subject = await _subjectGateway.GetSubject(SubjectId);
-            var posts = await _postGateway.GetPosts();
+            List<Post> posts = await _postGateway.GetPosts();
 
             Posts = posts.Where(p => p.SubjectId == SubjectId)
                 .OrderBy(p => p.Date)

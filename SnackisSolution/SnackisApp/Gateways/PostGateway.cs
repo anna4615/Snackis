@@ -55,9 +55,9 @@ namespace SnackisApp.Gateways
             return returnValue;
         }
 
-        public async Task<Post> PutPost(int editId, Post post)
+        public async Task PutPost(int editId, Post post)
         {
-            throw new NotImplementedException();
+            var respons = await _client.PutAsJsonAsync(_configuration["PostsAPI"] + "/" + editId, post);
         }
     }
 }

@@ -19,7 +19,10 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
         }
 
         [BindProperty(SupportsGet = true)]
-        public int PostId { get; set; }
+        public int DeletePostId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int DeleteOffensivePostId { get; set; }
 
         //[BindProperty(SupportsGet = true)]
         //public int DeletePostId { get; set; }
@@ -29,9 +32,14 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
 
         public async Task<IActionResult> OnGet()
         {
-            if (PostId != 0)
+            if (DeletePostId != 0)
             {
-                Post = await _postGateway.GetPost(PostId);
+                Post = await _postGateway.GetPost(DeletePostId);
+            }
+
+            if (DeleteOffensivePostId != 0)
+            {
+                Post = await _postGateway.GetPost(DeleteOffensivePostId);
             }
 
             return Page();
@@ -39,9 +47,22 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
 
         public async Task<IActionResult> OnPost()
         {
-            var post = await _postGateway.DeletePost(PostId);
+            // Om man deletar ett anmält inläggladdas sidan med lista över anmälda inlägg efter delete
+            if (DeleteOffensivePostId != 0)
+            {
+                var post = await _postGateway.DeletePost(DeleteOffensivePostId);
+                return Redirect("./OffensivePosts");
+            }
 
-            return Redirect($"./PostsView?SubjectId={post.SubjectId}");
+            // Om man deletar av någon annan anledning laddas sidan med inlägg för ämnet efter delete
+            if (DeletePostId != 0)
+            {
+                var post = await _postGateway.DeletePost(DeletePostId);
+                return Redirect($"./PostsView?SubjectId={post.SubjectId}");
+            }
+
+
+            return Page();
         }
     }
 }
