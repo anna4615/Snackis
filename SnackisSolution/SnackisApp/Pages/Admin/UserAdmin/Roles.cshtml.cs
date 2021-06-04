@@ -12,25 +12,19 @@ namespace SnackisApp.Pages.Admin.UserAdmin
     public class RolesModel : PageModel
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly UserManager<SnackisUser> _userManager;
 
-        public RolesModel(RoleManager<IdentityRole> roleManager/*, UserManager<SnackisUser> userManager*/)
+        public RolesModel(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
-            //_userManager = userManager;
         }
 
 
         [BindProperty]
         public string RoleName { get; set; }
 
-        public List<IdentityRole> Roles { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            Roles = _roleManager.Roles.ToList();
 
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
