@@ -25,10 +25,8 @@ namespace SnackisApp.HelpMethods
             forum.Name = "Trädgårdssnack";
 
             return forum;
-
         }
-
-
+       
         public static List<Subject> CreateSubjectList(Forum forum)
         {
             List<Subject> subjects = new List<Subject>();

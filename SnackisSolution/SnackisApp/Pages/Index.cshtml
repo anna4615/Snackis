@@ -1,12 +1,23 @@
 ﻿@page
 @model IndexModel;
 
+@using Microsoft.AspNetCore.Identity;
+@using Areas.Identity.Data;
+@using SnackisApp.Data;
+
+@inject UserManager<SnackisUser> UserManager;
+
 @{
     ViewData["Title"] = "Discussion";
+    var allUsers = UserManager.Users;
 }
 
 
-
+@if (UserManager.Users.Count() == 0)
+{
+    <p class="pt-5">Första gången appen startas måste en första användare registrera sig. Den här användaren blir admin för appen.</p>
+   <a href="/Identity/Account/Register">Registrera en admin</a>
+}
 
 
 

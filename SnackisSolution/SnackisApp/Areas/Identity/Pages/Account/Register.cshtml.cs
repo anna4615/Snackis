@@ -66,7 +66,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Efternamn")]
-            public string LastName { get; set; }           
+            public string LastName { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "{0}et måste bestå av minst {2} och mest {1} tecken.", MinimumLength = 6)]
@@ -78,7 +78,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account
             [Display(Name = "Upprepa lösenord")]
             [Compare("Password", ErrorMessage = "Lösenorden matchar inte.")]
             public string ConfirmPassword { get; set; }
-           
+
             [Display(Name = "Bild")]
             public string Picture { get; set; }
         }
@@ -118,6 +118,11 @@ namespace SnackisApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     var roleResult = await _userManager.AddToRoleAsync(user, "Medlem");
+
+                    if (_userManager.Users.Count() == 1)
+                    {
+                        roleResult = await _userManager.AddToRoleAsync(user, "Admin");
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
 

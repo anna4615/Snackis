@@ -37,12 +37,12 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
 
         public async Task<IActionResult> OnGetAsync()
         {
-            List<Forum> forums = await _forumGateway.GetForums();
+            //List<Forum> forums = await _forumGateway.GetForums();
 
-            if (forums.Count != 0)
-            {
-                Forum = forums.FirstOrDefault();
-            }
+            //if (forums.Count != 0)
+            //{
+            //    Forum = forums.FirstOrDefault();
+            //}
 
             Subjects = await _subjectGateway.GetSubjects();
 
@@ -51,10 +51,10 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (NewForum.Name != null)
-            {
-                await _forumGateway.PostForum(NewForum);
-            }
+            //if (newforum.name != null)
+            //{
+            //    await _forumgateway.postforum(newforum);
+            //}
 
 
             if (Subject.Name != null)
@@ -63,9 +63,9 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
                 Forum = forums.FirstOrDefault();
                 Subject.ForumId = Forum.Id;
                 await _subjectGateway.PostSubject(Subject);
-            }            
+            }
 
-            //Subjects = await _subjectGateway.GetSubjects();
+            Subjects = await _subjectGateway.GetSubjects();
 
             return RedirectToPage("./index");
         }
