@@ -53,47 +53,47 @@ namespace SnackisApp.Pages
                 await _roleManager.CreateAsync(userRole);
             }
 
-            //List<Forum> forums = await _forumGateway.GetForums();
-            //Forum forum = forums.FirstOrDefault();
+            List<Forum> forums = await _forumGateway.GetForums();
+            Forum forum = forums.FirstOrDefault();
 
-            //if (forum == null)
-            //{
-            //    forum = HelpMethods.Content.CreateForum();
+            if (forum == null)
+            {
+                forum = HelpMethods.Content.CreateForum();
 
-            //    await _forumGateway.PostForum(forum);
-            //}
+                await _forumGateway.PostForum(forum);
+            }
 
-            //List<SnackisUser> users = _userManager.Users.ToList();
+            List<SnackisUser> users = _userManager.Users.ToList();
 
-            //List<Subject> subjects = await _subjectGateway.GetSubjects();
+            List<Subject> subjects = await _subjectGateway.GetSubjects();
 
-            //if (subjects.Count() == 0)
-            //{
-            //    subjects = HelpMethods.Content.CreateSubjectList(forum);
+            if (subjects.Count() == 0)
+            {
+                subjects = HelpMethods.Content.CreateSubjectList(forum);
 
-            //    foreach (var subject in subjects)
-            //    {
-            //        await _subjectGateway.PostSubject(subject);
-            //    }
+                foreach (var subject in subjects)
+                {
+                    await _subjectGateway.PostSubject(subject);
+                }
 
-            //    List<Subject> createdSubjects = await _subjectGateway.GetSubjects();
+                List<Subject> createdSubjects = await _subjectGateway.GetSubjects();
 
-            //    List<Post> parentPosts = HelpMethods.Content.CreateParentPostsList(users, createdSubjects);
+                List<Post> parentPosts = HelpMethods.Content.CreateParentPostsList(users, createdSubjects);
 
-            //    foreach (var post in parentPosts)
-            //    {
-            //        await _postGateway.PostPost(post);
-            //    }
+                foreach (var post in parentPosts)
+                {
+                    await _postGateway.PostPost(post);
+                }
 
-            //    List<Post> createdParentPosts = await _postGateway.GetPosts();
+                List<Post> createdParentPosts = await _postGateway.GetPosts();
 
-            //    List<Post> answers = HelpMethods.Content.CreateAnswers(users, createdParentPosts);
+                List<Post> answers = HelpMethods.Content.CreateAnswers(users, createdParentPosts);
 
-            //    foreach (var post in answers)
-            //    {
-            //        await _postGateway.PostPost(post);
-            //    }
-            //}
+                foreach (var post in answers)
+                {
+                    await _postGateway.PostPost(post);
+                }
+            }
 
             return Page();
         }

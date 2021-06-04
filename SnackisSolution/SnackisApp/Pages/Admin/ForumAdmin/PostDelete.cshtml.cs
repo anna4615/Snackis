@@ -47,6 +47,15 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
 
         public async Task<IActionResult> OnPost()
         {
+            List<Post> allPosts = await _postGateway.GetPosts();
+            List<Post> answers = allPosts.Where(p => p.PostId == DeleteOffensivePostId || p.PostId == DeletePostId).ToList();
+
+           // När man tar bort en post deletes även dess svar
+            foreach (var post in answers)
+            {
+                await _postGateway.DeletePost(post.Id);
+            }
+
             // Om man deletar ett anmält inläggladdas sidan med lista över anmälda inlägg efter delete
             if (DeleteOffensivePostId != 0)
             {
@@ -57,10 +66,10 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
             // Om man deletar av någon annan anledning laddas sidan med inlägg för ämnet efter delete
             if (DeletePostId != 0)
             {
+
                 var post = await _postGateway.DeletePost(DeletePostId);
                 return Redirect($"./PostsView?SubjectId={post.SubjectId}");
             }
-
 
             return Page();
         }

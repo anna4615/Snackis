@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SnackisApp.Areas.Identity.Data;
+using SnackisApp.Gateways;
+using SnackisApp.Models;
 
 namespace SnackisApp.Areas.Identity.Pages.Account.Manage
 {
@@ -15,15 +18,18 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<SnackisUser> _userManager;
         private readonly SignInManager<SnackisUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly IPostGateway _postGateway;
 
         public DeletePersonalDataModel(
             UserManager<SnackisUser> userManager,
             SignInManager<SnackisUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            IPostGateway postGateway)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _postGateway = postGateway;
         }
 
        // public bool IsAdmin { get; set; }
@@ -75,15 +81,41 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
+            
+            
+
+            // Ta bort alla poster som användaren skrivit + svar
+            var allPosts = await _postGateway.GetPosts();
+            var usersPosts = allPosts.Where(p => p.UserId == user.Id).ToList();
+
+            var answers = new List<Post>();
+
+            foreach (var post in usersPosts)
+            {
+                var answersToPost = allPosts.Where(p => p.PostId == post.Id).ToList();
+                answers.AddRange(answersToPost);
+            }
+
+            foreach (var post in answers)
+            {
+                await _postGateway.DeletePost(post.Id);
+            }
+
+            foreach (var post in usersPosts)
+            {
+                await _postGateway.DeletePost(post.Id);
+            }
+
 
             // ta bort användarbild om den inte är defaultbilden och ingen annan använder samma bild
             string deletePicture = user.Picture;
-            var result = await _userManager.DeleteAsync(user);
 
             if (user.Picture != "default.png" && _userManager.Users.Where(u => u.Picture == deletePicture).FirstOrDefault() == null)
             {
                 System.IO.File.Delete($"./wwwroot/img/{deletePicture}");
             }
+
+            var result = await _userManager.DeleteAsync(user);
 
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

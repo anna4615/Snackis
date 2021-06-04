@@ -21,7 +21,7 @@
 <table class="table table-sm">
     <thead>
         <tr>
-            <th>Skrivet&nbspav</th>
+            <th colspan="2">Skrivet&nbspav</th>
             <th class="pl-3" ">Tid&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
             <th>Rubrik</th>
             <th class="pl-3">Text</th>
@@ -58,7 +58,7 @@
                     @post.Text
                 </td>
                 <td>
-                    <a href="./PostDelete?PostId=@post.Id">radera</a>
+                    <a href="./PostDelete?DeletePostId=@post.Id">radera</a>
                     @*<a asp-page="/PostDelete" asp-route-PostId="@post.Id">Radera</a>*@ @*Det här blir inte en länk, vet inte varför*@
                 </td>
             </tr>
