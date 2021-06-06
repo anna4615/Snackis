@@ -33,35 +33,37 @@
         {
             user = Users.Where(u => u.Id == post.UserId).FirstOrDefault();
 
-            <tr class="border-bottom">
-                @if (user != null)
-                {
-                    <td>
-                        <img style="max-height: 30px" src="/img/@user.Picture" title="Användarbild" alt="Användarbild" />
-                    </td>
-                    <td>
-                        @user.UserName
-                    </td>
-                }
-                else
-                {
-                    <td></td>
-                    <td>Okänd&nbspanvändare</td>
-                }
-                <td class="pl-3">
-                    @TimeZoneInfo.ConvertTime(post.Date, timeZone).ToString("g")
+        <tr class="border-bottom">
+            @if (user != null)
+            {
+                <td>
+                    <img style="max-height: 30px" src="/img/@user.Picture" title="Användarbild" alt="Användarbild" />
                 </td>
                 <td>
-                    @post.Title
+                    @user.UserName
                 </td>
-                <td class="pl-3">
-                    @post.Text
-                </td>
+            }
+            else
+            {
                 <td>
-                    <a href="./PostDelete?DeletePostId=@post.Id">radera</a>
-                    @*<a asp-page="/PostDelete" asp-route-PostId="@post.Id">Radera</a>*@ @*Det här blir inte en länk, vet inte varför*@
+                    <img style="max-height: 30px" src="/img/default.png" title="Användarbild" alt="Användarbild" />
                 </td>
-            </tr>
+                <td>Okänd&nbspanvändare</td>
+            }
+            <td class="pl-3">
+                @TimeZoneInfo.ConvertTime(post.Date, timeZone).ToString("g")
+            </td>
+            <td>
+                @post.Title
+            </td>
+            <td class="pl-3">
+                @post.Text
+            </td>
+            <td>
+                <a href="./PostDelete?DeletePostId=@post.Id">radera</a>
+                @*<a asp-page="/PostDelete" asp-route-PostId="@post.Id">Radera</a>*@ @*Det här blir inte en länk, vet inte varför*@
+            </td>
+        </tr>
         }
     </tbody>
 </table>

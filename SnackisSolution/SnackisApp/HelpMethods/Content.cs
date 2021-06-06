@@ -75,7 +75,6 @@ namespace SnackisApp.HelpMethods
                 Date = DateTime.UtcNow,
                 Title = "Goda morötter",
                 Text = "Kan någon ge mig tips om goda morotssorter?",
-                IsPrivate = false,
                 IsOffensiv = false
             });
 
@@ -86,7 +85,6 @@ namespace SnackisApp.HelpMethods
                 Date = DateTime.UtcNow,
                 Title = "Potatisskörd",
                 Text = "Hur skall jag göra för att få potatisen klar för skörd till midsommar?",
-                IsPrivate = false,
                 IsOffensiv = false
             });
 
@@ -97,7 +95,6 @@ namespace SnackisApp.HelpMethods
                 Date = DateTime.UtcNow,
                 Title = "Jord till stjärnflocka",
                 Text = "Donec pulvinar pharetra mauris quis consequat. Nunc quis libero vitae massa pellentesque aliquam vitae eu diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec in diam auctor, sagittis tellus at, tincidunt ipsum. Phasellus vel lacinia lacus. Aenean gravida tortor at nunc viverra, vitae elementum erat volutpat. Ut non tortor eget risus vehicula ultrices. Nullam cursus imperdiet est. Etiam velit tellus, blandit ut vulputate at, finibus porta orci. Nullam dignissim eleifend magna nec dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris nec lobortis ex.",
-                IsPrivate = false,
                 IsOffensiv = false
             });
 
@@ -115,7 +112,6 @@ namespace SnackisApp.HelpMethods
                 SubjectId = parentPosts.ElementAt(0).SubjectId,
                 Date = DateTime.UtcNow,
                 Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi consequat magna sed nulla vestibulum, ut porta diam vestibulum. Praesent molestie lacinia tincidunt. Phasellus sit amet orci tellus. Nulla ultricies ligula diam. Cras risus velit, egestas at tincidunt eget, tempor et elit. Integer in laoreet ipsum, vel egestas urna.",
-                IsPrivate = false,
                 IsOffensiv = false
             });
 

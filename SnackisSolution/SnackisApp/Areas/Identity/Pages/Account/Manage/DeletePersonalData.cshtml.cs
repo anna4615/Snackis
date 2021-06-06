@@ -84,27 +84,27 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
             
             
 
-            // Ta bort alla poster som användaren skrivit + svar
-            var allPosts = await _postGateway.GetPosts();
-            var usersPosts = allPosts.Where(p => p.UserId == user.Id).ToList();
+            //// Ta bort alla poster som användaren skrivit + svar
+            //var allPosts = await _postGateway.GetPosts();
+            //var usersPosts = allPosts.Where(p => p.UserId == user.Id).ToList();
 
-            var answers = new List<Post>();
+            //var answers = new List<Post>();
 
-            foreach (var post in usersPosts)
-            {
-                var answersToPost = allPosts.Where(p => p.PostId == post.Id).ToList();
-                answers.AddRange(answersToPost);
-            }
+            //foreach (var post in usersPosts)
+            //{
+            //    var answersToPost = allPosts.Where(p => p.PostId == post.Id).ToList();
+            //    answers.AddRange(answersToPost);
+            //}
 
-            foreach (var post in answers)
-            {
-                await _postGateway.DeletePost(post.Id);
-            }
+            //foreach (var post in answers)
+            //{
+            //    await _postGateway.DeletePost(post.Id);
+            //}
 
-            foreach (var post in usersPosts)
-            {
-                await _postGateway.DeletePost(post.Id);
-            }
+            //foreach (var post in usersPosts)
+            //{
+            //    await _postGateway.DeletePost(post.Id);
+            //}
 
 
             // ta bort användarbild om den inte är defaultbilden och ingen annan använder samma bild

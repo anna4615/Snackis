@@ -16,13 +16,13 @@ namespace SnackisApp.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<SnackisUsersContext>(options =>
+                services.AddDbContext<SnackisContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("LocalSnackisContext")));
+                        context.Configuration.GetConnectionString("SnackisContext")));
 
                 services.AddDefaultIdentity<SnackisUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<SnackisUsersContext>();
+                    .AddEntityFrameworkStores<SnackisContext>();
             });
         }
     }

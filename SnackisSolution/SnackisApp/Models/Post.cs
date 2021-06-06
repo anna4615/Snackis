@@ -36,12 +36,6 @@ namespace SnackisApp.Models
         [Display(Name = "Skriv ditt inlägg här")]
         public string Text { get; set; }
         
-        [JsonPropertyName("isPrivate")]
-        public bool IsPrivate { get; set; }
-        
-        [JsonPropertyName("onlyForUserName")]
-        public string OnlyForUserName { get; set; }
-        
         [JsonPropertyName("isOffensiv")]
         public bool IsOffensiv { get; set; }
     }

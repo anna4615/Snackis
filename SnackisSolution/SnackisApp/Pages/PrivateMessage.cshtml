@@ -1,0 +1,47 @@
+﻿@page
+@model SnackisApp.Pages.PrivateMessageModel
+
+@using SnackisApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<SnackisUser> UserManager;
+
+@{
+    var allMembers = UserManager.Users.OrderBy(u => u.UserName).Where(u => u.UserName != "Admin").Select(u => u.UserName).ToArray();
+    var selectUser = new SelectList(allMembers);
+}
+
+
+<h4>Skriv ett privat meddelande</h4>
+
+<div class="col">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Message.ToUserName"></label>
+            <input asp-for="Message.ToUserName" class="form-control" />
+            @*<select class="form-control" asp-for="Message.ToUserName" asp-items="selectUser">
+                    <option value=""></option>
+                </select>*@
+            <span asp-validation-for="Message.ToUserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Message.Title"></label>
+            <input asp-for="Message.Title" class="form-control" />
+            <span asp-validation-for="Message.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Message.Text"></label>
+            <textarea asp-for="Message.Text" class="form-control"></textarea>
+            <span asp-validation-for="Message.Text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Spara inlägg" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

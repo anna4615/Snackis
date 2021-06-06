@@ -51,6 +51,11 @@ namespace SnackisApp
                 options.Conventions.AuthorizePage("/Report", "MustBeMember");
             });
 
+            services.AddDbContext<SnackisContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SnackisContext")));     
+
+          
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

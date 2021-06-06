@@ -14,16 +14,6 @@
             <input asp-for="Post.Title" class="form-control" />
             <span asp-validation-for="Post.Title" class="text-danger"></span>
         </div>
-        <div class="form-group form-check">
-            <input class="form-check-input" type="checkbox" asp-for="Post.IsPrivate" />
-            <label class="form-check-label" asp-for="Post.IsPrivate"></label>
-            <span asp-validation-for="Post.IsPrivate" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Post.OnlyForUserName"></label>
-            <input asp-for="Post.OnlyForUserName" class="form-control" />
-            <span asp-validation-for="Post.OnlyForUserName" class="text-danger"></span>
-        </div>
         <div class="form-group">
             <label asp-for="Post.Text"></label>
             <textarea asp-for="Post.Text" class="form-control"></textarea>

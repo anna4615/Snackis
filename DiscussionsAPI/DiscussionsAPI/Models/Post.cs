@@ -16,8 +16,6 @@ namespace PostsAPI.Models
         public ICollection<Post> Posts { get; set; }
         public DateTime Date { get; set; }
         public string Text { get; set; }
-        public bool IsPrivate { get; set; } = false;
-        public string OnlyForUserName { get; set; }
         public bool IsOffensiv { get; set; } = false;
     }
 }

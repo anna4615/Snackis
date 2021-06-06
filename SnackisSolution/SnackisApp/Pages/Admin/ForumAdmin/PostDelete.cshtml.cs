@@ -48,15 +48,15 @@ namespace SnackisApp.Pages.Admin.ForumAdmin
         public async Task<IActionResult> OnPost()
         {
             List<Post> allPosts = await _postGateway.GetPosts();
-            List<Post> answers = allPosts.Where(p => p.PostId == DeleteOffensivePostId || p.PostId == DeletePostId).ToList();
 
-           // När man tar bort en post deletes även dess svar
+            // När man tar bort en post deletes även dess svar
+            List<Post> answers = allPosts.Where(p => p.PostId == DeleteOffensivePostId || p.PostId == DeletePostId).ToList();
             foreach (var post in answers)
             {
                 await _postGateway.DeletePost(post.Id);
             }
 
-            // Om man deletar ett anmält inläggladdas sidan med lista över anmälda inlägg efter delete
+            // Om man deletar ett anmält inlägg laddas sidan med lista över anmälda inlägg efter delete
             if (DeleteOffensivePostId != 0)
             {
                 var post = await _postGateway.DeletePost(DeleteOffensivePostId);

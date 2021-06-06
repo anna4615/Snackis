@@ -6,15 +6,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SnackisApp.Areas.Identity.Data;
+using SnackisApp.Models;
 
 namespace SnackisApp.Data
 {
-    public class SnackisUsersContext : IdentityDbContext<SnackisUser>
+    public class SnackisContext : IdentityDbContext<SnackisUser>
     {
-        public SnackisUsersContext(DbContextOptions<SnackisUsersContext> options)
+        public SnackisContext(DbContextOptions<SnackisContext> options)
             : base(options)
         {
         }
+
+        public DbSet<PrivateMessage> PrivateMessage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

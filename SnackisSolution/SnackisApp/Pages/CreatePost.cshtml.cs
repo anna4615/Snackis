@@ -14,18 +14,15 @@ namespace SnackisApp.Pages
     public class CreatePostModel : PageModel
     {
         private readonly UserManager<SnackisUser> _userManager;
-        private readonly ISubjectGateway _subjectGateway;
         private readonly IPostGateway _postGateway;
 
-        public CreatePostModel(UserManager<SnackisUser> userManager,
-            ISubjectGateway subjectGateway, IPostGateway postGateway)
+        public CreatePostModel(
+            UserManager<SnackisUser> userManager,
+            IPostGateway postGateway)
         {
             _userManager = userManager;
-            _subjectGateway = subjectGateway;
             _postGateway = postGateway;
         }
-
-        //public Forum Forum { get; set; }
 
         public List<Post> Posts { get; set; }
 
