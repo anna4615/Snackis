@@ -27,7 +27,7 @@ namespace SnackisApp.Pages
 
         public List<SnackisUser> Users { get; set; }
 
-        public string UserName { get; set; }
+        //public string UserName { get; set; }
         public List<Post> Answers { get; set; }
         public Post ParentPost { get; set; }
         public Subject Subject { get; set; }

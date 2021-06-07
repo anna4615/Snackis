@@ -13,6 +13,8 @@ namespace SnackisApp.Models
 
         public string UserId { get; set; }
 
+        public int? PrivateMessageId { get; set; }
+
         public DateTime Date { get; set; }
 
         [Display(Name = "Rubrik")]

@@ -32,8 +32,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
             _postGateway = postGateway;
         }
 
-       // public bool IsAdmin { get; set; }
-
+       
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -107,15 +106,15 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
             //}
 
 
-            // ta bort användarbild om den inte är defaultbilden och ingen annan använder samma bild
             string deletePicture = user.Picture;
+            var result = await _userManager.DeleteAsync(user);
 
+            // ta bort användarbild om den inte är defaultbilden och ingen annan använder samma bild
             if (user.Picture != "default.png" && _userManager.Users.Where(u => u.Picture == deletePicture).FirstOrDefault() == null)
             {
                 System.IO.File.Delete($"./wwwroot/img/{deletePicture}");
             }
 
-            var result = await _userManager.DeleteAsync(user);
 
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
