@@ -23,7 +23,7 @@ namespace PostsAPI.Controllers
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPost()
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
             return await _context.Post.ToListAsync();
         }
@@ -41,6 +41,25 @@ namespace PostsAPI.Controllers
 
             return post;
         }
+
+
+        // GET: api/Posts/parentposts/2
+        [HttpGet("parentposts/{parentId}")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts(int parentId)
+        {
+            List<Post> answers = await _context.Post.Where(p => p.PostId == parentId).ToListAsync();
+            return answers;
+        }
+
+
+        // GET: api/Posts/subjectname/name
+        [HttpGet("subjectname/name")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetPosts(string name)
+        {
+            var posts = await _context.Post.Where(p => p.Subject.Name == name).ToListAsync();
+            return posts;
+        }
+
 
         // PUT: api/Posts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

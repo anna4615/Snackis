@@ -26,8 +26,6 @@
         {
             @foreach (var post in Model.ParentPosts)
             {
-
-                NumberOfAnswers = Model.AllPosts.Where(p => p.PostId != null).Where(p => p.PostId == post.Id).Count();
                 NumberOfAnswers = Model.AllPosts.Where(p => p.PostId != null && p.PostId == post.Id).Count();
 
 
