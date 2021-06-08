@@ -22,7 +22,7 @@
 
 <div class="col">
     <h5>Inkorg</h5>
-
+ 
     @foreach (var pm in Model.ReceivedPMs)
     {
         fromUser = allUsers.Where(u => u.Id == pm.UserId).FirstOrDefault();

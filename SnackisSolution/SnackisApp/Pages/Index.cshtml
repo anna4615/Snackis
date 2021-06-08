@@ -13,16 +13,24 @@
 }
 
 
-@if (UserManager.Users.Count() == 0)
+@if (allUsers.Count() == 0)
 {
-    <p class="pt-5">Första gången appen startas måste en användare registrera sig. Den här användaren blir administratör för appen.
-    Fler administratörer kan läggas till senare</p>
-   <a href="/Identity/Account/Register">Registrera en admin</a>
+    <p class="pt-5">
+        Första gången appen startas måste en användare registrera sig. Den här användaren blir administratör för appen.
+        Fler administratörer kan läggas till senare
+    </p>
+    <a href="/Identity/Account/Register">Registrera en admin</a>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h6>Innehåll kan skapas via länken</h6>
+    <p>Skapa inte admin innan</p>
+    <p>Tabellerna AspNetUsers, Forum, Subject och Post måste vara tomma</p>
+    <a href="/seeding">Skapa innehåll</a>
 }
-
-
-
-
-
 
 

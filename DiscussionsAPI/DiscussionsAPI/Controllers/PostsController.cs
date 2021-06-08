@@ -56,7 +56,7 @@ namespace PostsAPI.Controllers
         [HttpGet("subjectname/name")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts(string name)
         {
-            var posts = await _context.Post.Where(p => p.Subject.Name == name).ToListAsync();
+            List<Post> posts = await _context.Post.Where(p => p.Subject.Name == name).ToListAsync();
             return posts;
         }
 

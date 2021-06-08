@@ -1,4 +1,5 @@
-﻿using SnackisApp.Areas.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using SnackisApp.Areas.Identity.Data;
 using SnackisApp.Gateways;
 using SnackisApp.Models;
 using System;
@@ -12,11 +13,71 @@ namespace SnackisApp.HelpMethods
     {
         private readonly IForumGateway _forumGateway;
         private readonly ISubjectGateway _subjectGateway;
+        private readonly IPostGateway _postGateway;
+        private readonly UserManager<SnackisUser> _userManager;
 
-        public Content(IForumGateway forumGateway, ISubjectGateway subjectGateway)
+        public Content(
+            IForumGateway forumGateway,
+            ISubjectGateway subjectGateway,
+            IPostGateway postGateway,
+            UserManager<SnackisUser> userManager)
         {
             _forumGateway = forumGateway;
             _subjectGateway = subjectGateway;
+            _postGateway = postGateway;
+            _userManager = userManager;
+        }
+
+        public static List<SnackisUser> CreateUsers()
+        {
+            List<SnackisUser> users = new List<SnackisUser>();
+
+            users.Add(new SnackisUser
+            {
+                Email = "admin@a.se",
+                UserName = "admin",
+                FirstName = "Anna",
+                LastName = "Sjöberg",
+                Picture = "default.png"
+            });
+
+            users.Add(new SnackisUser
+            {
+                Email = "n@n.se",
+                UserName = "nisse",
+                FirstName = "Nils",
+                LastName = "Ny",
+                Picture = "spade-24434_1280.png"
+            });
+
+            users.Add(new SnackisUser
+            {
+                Email = "g@g.se",
+                UserName = "goran",
+                FirstName = "Göran",
+                LastName = "Gro",
+                Picture = "gardening-5233862_1280.png"
+            });
+
+            users.Add(new SnackisUser
+            {
+                Email = "s@s.se",
+                UserName = "stina",
+                FirstName = "Stina",
+                LastName = "Så",
+                Picture = "ladybug-476344_1280.png"
+            });
+
+            users.Add(new SnackisUser
+            {
+                Email = "f@f.se",
+                UserName = "flora",
+                FirstName = "Flora",
+                LastName = "Frö",
+                Picture = "spring-flower-4165109_1280.png"
+            });
+
+            return users;
         }
 
         public static Forum CreateForum()
@@ -26,7 +87,7 @@ namespace SnackisApp.HelpMethods
 
             return forum;
         }
-       
+
         public static List<Subject> CreateSubjectList(Forum forum)
         {
             List<Subject> subjects = new List<Subject>();
@@ -136,6 +197,65 @@ namespace SnackisApp.HelpMethods
             });
 
             return posts;
+        }
+
+        public async Task SeedUsers()
+        {
+            List<SnackisUser> users = CreateUsers();
+
+            foreach (var user in users)
+            {
+                var result = await _userManager.CreateAsync(user, "Zxcv!234");
+
+                if (user.UserName == "admin")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                await _userManager.AddToRoleAsync(user, "Medlem");
+
+            }
+        }
+
+        public async Task SeedForum()
+        {
+            Forum forum = CreateForum();
+
+            await _forumGateway.PostForum(forum);
+        }
+
+        public async Task SeedSubjects()
+        {
+            List<Forum> forums = await _forumGateway.GetForums();
+            Forum forum = forums.FirstOrDefault();
+
+            var subjects = CreateSubjectList(forum);
+
+            foreach (var subject in subjects)
+            {
+                await _subjectGateway.PostSubject(subject);
+            }
+        }
+
+        public async Task SeedPosts()
+        {
+            List<SnackisUser> users = _userManager.Users.ToList();
+            List<Subject> subjects = await _subjectGateway.GetSubjects();
+
+            List<Post> parentPosts = CreateParentPostsList(users, subjects);
+
+            foreach (var post in parentPosts)
+            {
+                await _postGateway.PostPost(post);
+            }
+
+            parentPosts = await _postGateway.GetPosts();
+
+            List<Post> answers = CreateAnswers(users, parentPosts);
+
+            foreach (var post in answers)
+            {
+                await _postGateway.PostPost(post);
+            }
         }
     }
 }
