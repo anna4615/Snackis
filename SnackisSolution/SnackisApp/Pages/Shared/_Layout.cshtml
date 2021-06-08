@@ -44,7 +44,7 @@
 
 
     <div class="container pr-3">
-
+        <partial name="_CookieConsentPartial" />
         <div class="row">
             <div class="col-md-auto mr-4 border-right">
                 <h5>Ämnen</h5>
@@ -67,7 +67,7 @@
                 <main role="main" class="pb-3">
                     @if (Forum != null)
                     {
-                    <h1 class="text-center">@Forum.Name</h1>
+                        <h1 class="text-center">@Forum.Name</h1>
                     }
                     @RenderBody()
                 </main>

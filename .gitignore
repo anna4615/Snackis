@@ -333,3 +333,8 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 DiscussionsAPI/DiscussionsAPI/Properties/ServiceDependencies/annasnackisapi - Web Deploy/mssql3.arm.json
+DiscussionsAPI/DiscussionsAPI/Properties/serviceDependencies.annasnackisapi - Web Deploy.json
+DiscussionsAPI/DiscussionsAPI/Properties/ServiceDependencies/annasnackisapi - Web Deploy/profile.arm.json
+SnackisSolution/SnackisApp/Properties/serviceDependencies.annasnackis - Web Deploy.json
+SnackisSolution/SnackisApp/Properties/ServiceDependencies/annasnackis - Web Deploy/mssql2.arm.json
+SnackisSolution/SnackisApp/Properties/ServiceDependencies/annasnackis - Web Deploy/profile.arm.json
