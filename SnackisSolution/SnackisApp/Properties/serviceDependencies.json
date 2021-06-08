@@ -4,10 +4,6 @@
       "type": "mssql",
       "connectionId": "SnackisUsersContextConnection"
     },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:SnackisUsersContextConnection"
-    },
     "mssql3": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:SnackisContext"
@@ -15,6 +11,10 @@
     "mssql4": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:SnackisAppContext"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:SnackisUsersContextConnection"
     }
   }
 }

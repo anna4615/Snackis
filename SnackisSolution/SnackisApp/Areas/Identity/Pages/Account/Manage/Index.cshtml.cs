@@ -98,7 +98,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (UploadedImage.FileName != user.Picture)
+            if (UploadedImage != null && UploadedImage.FileName != user.Picture)
             {
                 string file = "./wwwroot/img/" + UploadedImage.FileName;
                 using (FileStream fileStream = new FileStream(file, FileMode.Create))

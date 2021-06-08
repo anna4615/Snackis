@@ -10,8 +10,8 @@ using SnackisApp.Data;
 namespace SnackisApp.Migrations
 {
     [DbContext(typeof(SnackisContext))]
-    [Migration("20210607093739_PMIdKeynull")]
-    partial class PMIdKeynull
+    [Migration("20210608162507_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
