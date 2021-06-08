@@ -44,13 +44,15 @@ namespace SnackisApp.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "Användarnamn")]
             public string UserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Lösenord")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Kom ihåg mig")]
             public bool RememberMe { get; set; }
         }
 

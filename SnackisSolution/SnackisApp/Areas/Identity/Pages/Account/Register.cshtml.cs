@@ -53,7 +53,7 @@ namespace SnackisApp.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Epost")]
+            [Display(Name = "E-post")]
             public string Email { get; set; }
 
             [Required]
