@@ -33,9 +33,28 @@ namespace SnackisApp.Pages.PM
         [BindProperty(SupportsGet = true)]
         public string ForUser { get; set; }
 
+        public List<string> MembersOnly { get; set; }
 
-        public void OnGet()
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            List<SnackisUser> allUsers = _userManager.Users                
+                .OrderBy(u => u.UserName)
+                .ToList();
+
+            MembersOnly = new List<string>();
+
+            foreach (var user in allUsers)
+            {
+                bool isMember = await _userManager.IsInRoleAsync(user, "Medlem");
+
+                if (isMember)
+                {
+                    MembersOnly.Add(user.UserName);
+                }
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
