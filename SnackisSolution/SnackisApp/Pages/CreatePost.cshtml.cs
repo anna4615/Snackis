@@ -49,6 +49,10 @@ namespace SnackisApp.Pages
             {
                 Post.PostId = PostId;
             }
+            if (string.IsNullOrWhiteSpace(Post.Title))
+            {
+                Post.Title = "-----";
+            }
             Post.Date = DateTime.UtcNow;
             Post.IsOffensiv = false;
 
